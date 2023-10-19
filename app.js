@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
-  res.send('Initial my-web-app configuration...');
+  res.send('Testing automatic workflow...');
 });
 
 app.listen(port, () => {
