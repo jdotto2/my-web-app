@@ -20,11 +20,11 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
+            --platform linux/arm64 \
+            --push \
             -t "${{ secrets.DOCKERHUB_USERNAME }}/my-web-app:latest" \
             .
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/my-web-app:latest"
-        
+
       - name: SSH into Server and Deploy
         uses: appleboy/ssh-action@v1.0.0
         with:
