@@ -1,0 +1,33 @@
+name: my-web-app CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Build and Push Docker Image
+      run: |
+        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/my-web-app" .
+        docker push "${{ secrets.DOCKERHUB_USERNAME }}/my-web-app:latest"
+
+    - name: SSH into Server and Deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
+            docker pull "${{ secrets.DOCKERHUB_USERNAME }}"/my-web-app:latest
+            docker-compose -f ~/app/docker-compose.yml down || true
+            docker-compose -f ~/app/docker-compose.yml up -d
