@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="/assets/favicon-16x16.png">
+</head>
+<body>
+    <%- include('nav') %>
+    <div class="container-fluid mt-4 custom-container">
+        <div class="row align-items-center text-start border border-light">
+            <div class="h3 bg-light">Project #1: Daily night time (10 pm to 5 am) activity monitoring</div>
+            <div class="col">
+                <div class="p-2 mb-2 bg-light border border-light rounded-2">
+                    This project demonstrates how to generate, visualize, and get useful insights from real-time sensor data.
+                    The concept of this particular project is to track night time (10 pm to 5 am) activity based on the light level 
+                    in a room. The light could be from the room lights, TV, phone flashlight, etc. The project assumes that there 
+                    is no activity while the light level is close to zero percent (lit room = 100%). This project can be deployed in
+                    an office space, a facility room, a house, etc.
+                </div>
+                <img src="/assets/Project1_Design.svg" alt="Project1_Design" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <%- include('footer') %>
+</body>
+</html>
