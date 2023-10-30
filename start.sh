@@ -8,3 +8,4 @@
 
 node app.js &
 node models/mqttData.js &
+tail -f /dev/null # block the script from exiting to keep the container running!
