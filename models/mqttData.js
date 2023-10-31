@@ -6,9 +6,9 @@
  * cleaner/scable code
  */
 
-const { Point } = require('@influxdata/influxdb-client');
+const {Point} = require('@influxdata/influxdb3-client');
 const database = require('./database');
-const { write_api, database_org } = database;
+const { database_client, database_bucket } = database;
 const mqtt = require('mqtt');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -47,10 +47,10 @@ mqtt_client.on('message', (topic, message) => {
         let device_time = new Date(Date.parse(data.time));
     
         const temperaturePoint = new Point('temperature')
-            .tag('location', 'bedroom')
-            .floatField('temperature', temperature)
-            .timestamp(device_time);
-        write_api.writePoint(temperaturePoint);
+            .setTag('location', 'bedroom')
+            .setFloatField('temperature', temperature)
+            .setTimestamp(device_time);
+        database_client.write(temperaturePoint, database_bucket);
         console.log("Temperature Point Written");
     }
     
@@ -60,10 +60,10 @@ mqtt_client.on('message', (topic, message) => {
         let device_time = new Date(Date.parse(data.time));
     
         const lightStatusPoint = new Point('lights')
-            .tag('location', 'bedroom')
-            .intField('lights', light_status)
-            .timestamp(device_time);
-        write_api.writePoint(lightStatusPoint);
+            .setTag('location', 'bedroom')
+            .setIntegerField('status', light_status)
+            .setTimestamp(device_time);
+        database_client.write(lightStatusPoint, database_bucket);
         console.log("Light Point Written");
     }
     
