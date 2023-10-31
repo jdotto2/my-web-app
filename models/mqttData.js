@@ -41,29 +41,30 @@ mqtt_client.on('message', (topic, message) => {
     console.log(`Received message on topic: ${topic}`);
     console.log(`Message: ${message.toString()}`);
 
-    if(topic === 'data/temperature'){
+    if (topic === 'data/temperature') {
         let data = JSON.parse(message);
         let temperature = parseFloat(data.temp.toFixed(2));
         let device_time = new Date(Date.parse(data.time));
-        
-        const temperaturePoint = new Point('room_state')
+    
+        const temperaturePoint = new Point('temperature')
             .tag('location', 'bedroom')
             .floatField('temperature', temperature)
             .timestamp(device_time);
         write_api.writePoint(temperaturePoint);
         console.log("Temperature Point Written");
     }
-
-    if(topic === 'data/lights'){
+    
+    if (topic === 'data/lights') {
         let data = JSON.parse(message);
         let light_status = parseInt(data.lights);
         let device_time = new Date(Date.parse(data.time));
-        
-        const lightStatusPoint = new Point('room_state')
+    
+        const lightStatusPoint = new Point('lights')
             .tag('location', 'bedroom')
             .intField('lights', light_status)
             .timestamp(device_time);
         write_api.writePoint(lightStatusPoint);
         console.log("Light Point Written");
     }
+    
 });
