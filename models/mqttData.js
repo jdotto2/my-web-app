@@ -51,6 +51,7 @@ mqtt_client.on('message', (topic, message) => {
             .floatField('temperature', temperature)
             .timestamp(device_time);
         write_api.writePoint(temperaturePoint);
+        console.log("Temperature Point Written");
     }
 
     if(topic === 'data/lights'){
@@ -63,5 +64,6 @@ mqtt_client.on('message', (topic, message) => {
             .intField('lights', light_status)
             .timestamp(device_time);
         write_api.writePoint(lightStatusPoint);
+        console.log("Light Point Written");
     }
 });
