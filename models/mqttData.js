@@ -6,15 +6,22 @@
  * cleaner/scable code
  */
 
-const {Point} = require('@influxdata/influxdb3-client');
-const database = require('./database');
-const { database_client, database_bucket } = database;
+const {InfluxDB, Point} = require('@influxdata/influxdb-client');
 const mqtt = require('mqtt');
 const path = require('path');
 const dotenv = require('dotenv');
 
 const envPath = path.resolve(__dirname, '../.env');
 dotenv.config({ path: envPath });
+
+const token = process.env.DATABASE_TOKEN;
+
+const url = process.env.DATABASE_URL;
+
+const client = new InfluxDB({url, token});
+
+let org = process.env.DATABASE_ORG;
+let bucket = process.env.DATABASE_BUCKET;
 
 // mqtt broker connection options
 const options = {
@@ -45,26 +52,25 @@ mqtt_client.on('message', (topic, message) => {
         let data = JSON.parse(message);
         let temperature = parseFloat(data.temp.toFixed(2));
         let device_time = new Date(Date.parse(data.time));
-    
-        const temperaturePoint = new Point('temperature')
-            .setTag('location', 'bedroom')
-            .setFloatField('temperature', temperature)
-            .setTimestamp(device_time);
-        database_client.write(temperaturePoint, database_bucket);
-        console.log("Temperature Point Written");
+        console.log(temperature);
+	let writeClient = client.getWriteApi(org, bucket, 'ns');
+	let point = new Point('temperature')
+	 .tag('location', 'room1')
+	 .floatField('temperature', temperature);
+	writeClient.writePoint(point);
+	writeClient.flush();
     }
-    
+
     if (topic === 'data/lights') {
         let data = JSON.parse(message);
         let light_status = parseInt(data.lights);
         let device_time = new Date(Date.parse(data.time));
-    
-        const lightStatusPoint = new Point('lights')
-            .setTag('location', 'bedroom')
-            .setIntegerField('status', light_status)
-            .setTimestamp(device_time);
-        database_client.write(lightStatusPoint, database_bucket);
-        console.log("Light Point Written");
+        console.log(light_status);
+        let writeClient = client.getWriteApi(org, bucket, 'ns');
+        let point = new Point('lights')
+         .tag('location', 'room1')
+         .intField('status', light_status);
+        writeClient.writePoint(point);
+        writeClient.flush();
     }
-    
 });
