@@ -7,3 +7,5 @@ node_modules/
 *.sublime-*
 *.log
 *.zip
+*.out
+stop.sh
