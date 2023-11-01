@@ -24,5 +24,4 @@ jobs:
             sh stop.sh
             git pull
             sh start.sh
-            logout
 
