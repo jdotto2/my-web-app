@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ~
-            git pull https://github.com/jdotto2/my-web-app.git
-            cd my-web-app/ && sh start.sh
+            cd ~/my-web-app
+            git pull
+            sh start.sh
 
