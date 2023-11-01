@@ -6,6 +6,5 @@
 # This file serves as the entry point for
 # my-web-app
 
-node app.js &
-node models/mqttData.js &
-tail -f /dev/null # block the script from exiting to keep the container running!
+nohup node app.js &
+nohup node models/mqttData.js &

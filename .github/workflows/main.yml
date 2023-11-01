@@ -21,6 +21,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/my-web-app
+            sh stop.sh
             git pull
             sh start.sh
 
