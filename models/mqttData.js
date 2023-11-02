@@ -35,14 +35,11 @@ const createMqttClient = (io) => {
 
   // write new data to InfluxDB [consider decoupling]
   mqttClient.on('message', (topic, message) => {
-    //console.log(`Received message on topic: ${topic}`);
-    //console.log(`Message: ${message.toString()}`);
 
     if (topic === 'data/temperature') {
       let data = JSON.parse(message);
       let temperature = parseFloat(data.temp.toFixed(2));
       let device_time = data.time;
-      console.log(temperature);
 
       let writeClient = client.getWriteApi(org, bucket, 'ns');
       let point = new Point('temperature')
