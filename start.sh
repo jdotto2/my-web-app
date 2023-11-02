@@ -7,4 +7,3 @@
 # my-web-app
 
 nohup node app.js >> app.log 2>&1 &
-nohup node models/mqttData.js >> app.log 2>&1 &
