@@ -21,3 +21,14 @@
 .custom-container {
   max-width: 1000px;
 }
+
+.checklist {
+  list-style-type: none; /* Remove default bullet points */
+}
+
+.checklist li::before {
+  content: "\2713"; /* Unicode check mark character */
+  color: green; /* Change the color of the check mark */
+  font-weight: bold; /* Optional: make the check mark bold */
+  margin-right: 5px; /* Optional: add some spacing between the check mark and the text */
+}
