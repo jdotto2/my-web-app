@@ -20,8 +20,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            sudo systemctl stop jdotto.dev.service
             cd ~/my-web-app
-            sh stop.sh
             git pull
-            sh start.sh
+            sudo systemctl start jdotto.dev.service
 
