@@ -12,7 +12,9 @@ Hosting: server information
  - ***Operating System***: Ubuntu Server 22.04 LTS
  - ***Web Server***: Nginx
  - ***Domain***: Google Domains (before acquisition by Squarespace)
- - ***TLS certificate***: [Let's Encrypt](https://nodejs.org/en)
+ - ***TLS certificate***: [Let's Encrypt](https://letsencrypt.org/)
+ - ***Performance & Content Delivery***: [Cloudflare](https://www.cloudflare.com/)
+
 
 **Self-hosted, and why?**
  - ***Free*** and ***fully customizable*** solution for a demonstration project
