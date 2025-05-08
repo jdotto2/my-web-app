@@ -16,14 +16,22 @@
         const socket = io();
         socket.on('temperature', (data) => {
             console.log(data);
-            document.getElementById("temperature").innerHTML = `Temperature: ${data.temperature}˚C`;
-            document.getElementById("last_updated").innerHTML = `Device time: ${data.timestamp}`;
+            document.getElementById("temperature").innerHTML = `Temperature: ${data.temperature}˚F`;
+	    document.getElementById("rh").innerHTML = `Relative Humidity: ${data.rh}%`;
+            document.getElementById("snr").innerHTML = `SNR: ${data.snr}`;
+            document.getElementById("rssi").innerHTML = `RSSI: ${data.rssi}`;
+            document.getElementById("last_updated").innerHTML = `Reported At: ${data.timestamp}`;
+            
         });
     </script>
     <%- include('nav') %>
-    <div class="h2 text-center mb-3">New data in 5 seconds...</div>
-    <div id="temperature" class="h1 text-center"></div>
-    <div id="last_updated" class="h3 text-center"></div>
+    <div class="h1 text-center mb-3">New data in ~5 seconds...</div>
+    <div id="temperature" class="h2 text-center"></div>
+    <div id="rh" class="h2 text-center"></div>
+    <div id="rssi" class="h2 text-center"></div>
+    <div id="snr" class="h2 text-center"></div>
+    <div id="last_updated" class="h2 text-center"></div>
+
     <%- include('footer') %>
 </body>
 </html>
