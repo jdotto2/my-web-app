@@ -12,7 +12,7 @@ const client = new InfluxDB({ url, token });
 
 const org = process.env.DATABASE_ORG;
 const bucket = process.env.DATABASE_BUCKET;
-
+const mqttSubTopic = process.env.MQTT_SUB_TOPIC;
 const createMqttClient = (io) => {
   // mqtt broker connection options
   const options = {
@@ -26,7 +26,7 @@ const createMqttClient = (io) => {
 
   // connect to mqtt broker
   const mqttClient = mqtt.connect(options);
-  mqttClient.subscribe('data/#');
+  mqttClient.subscribe(mqttSubTopic);
 
   // set callbacks for connection and new data
   mqttClient.on('connect', () => {
@@ -38,19 +38,20 @@ const createMqttClient = (io) => {
 
     if (topic === 'data/temperature') {
       let data = JSON.parse(message);
-      let temperature = parseFloat(data.temp.toFixed(2));
+      let temp = 32 + parseFloat(data.temp) * 1.8;
+      temp = Number(temp.toFixed(1));
       let device_time = data.time;
 
       let writeClient = client.getWriteApi(org, bucket, 'ns');
       let point = new Point('temperature')
-        .tag('location', 'room1')
-        .floatField('temperature', temperature);
+        .tag('location', 'High-end-Suite')
+        .floatField('temperature', temp);
       writeClient.writePoint(point);
       writeClient.flush();
-    
+
       // emit real-time data to the frontend via websocket (socket.io library)
       const socketdata = {
-        temperature: temperature,
+        temperature: temp,
         timestamp: device_time,
       };
 
@@ -61,11 +62,10 @@ const createMqttClient = (io) => {
       let data = JSON.parse(message);
       let light_status = parseInt(data.lights);
       let device_time = new Date(Date.parse(data.time));
-      console.log(light_status);
 
       let writeClient = client.getWriteApi(org, bucket, 'ns');
       let point = new Point('lights')
-        .tag('location', 'room1')
+        .tag('location', 'High-end-Suite')
         .intField('status', light_status);
       writeClient.writePoint(point);
       writeClient.flush();
