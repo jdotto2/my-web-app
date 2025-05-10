@@ -17,9 +17,9 @@ Hosting: server information
 
 
 **Self-hosted, and why?**
- - ***Free*** and ***fully customizable*** solution for a demonstration project
- - Great strategy to learn web technologies
- - Cloud providers' free tiers are short-term and offer limited flexibility and capabilities
+ - ***Free***
+ - ***Fully customizable***
+ - ***Cloud providers' free tiers are short-term and offer limited flexibility***
 
 **NB:** Cloud solutions can be far more reliable and scalable!
 
@@ -30,5 +30,4 @@ Hosting: server information
 
 Automated application deployment
 -
- - Containerized the application with Docker to ensure portability
  - Automated the continuous integration and deploymnet (CI/CD) with GitHub Actions
