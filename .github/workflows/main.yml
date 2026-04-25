@@ -21,7 +21,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             sudo systemctl stop jdotto.dev.service
-            cd ~/my-web-app
+            cd ~/server/website/my-web-app
             git pull
             sudo systemctl start jdotto.dev.service
 
